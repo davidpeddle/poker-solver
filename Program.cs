@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Poker
 {
@@ -8,16 +8,17 @@ namespace Poker
         static void Main(string[] args)
         {
             try{
-                var hands = ReadInput();
-                ProcessAndOutputResults(hands);
+                var game = RunGameLoop();
+                string victoryMessage = String.Join(", ", game.Winners.Select(winner => winner.Name)) + " Wins";
+                Console.WriteLine(victoryMessage);
             }
             catch{
                 Console.WriteLine("Error");
             }
         }
 
-        static List<Hand> ReadInput(){
-            List<Hand> hands = new List<Hand>();
+        static Game RunGameLoop(){
+            Game game = new Game();
             string inputLine;
             string nameLine = "";
             bool isNameLine = true;
@@ -26,17 +27,11 @@ namespace Poker
                     nameLine = inputLine;
                 }
                 else{
-                    hands.Add(Hand.CreateFromLines(nameLine, inputLine));
+                    game.AddHand(Hand.CreateFromLines(nameLine, inputLine));
                 }
                 isNameLine = !isNameLine;
             }
-            return hands;
-        }
-
-        static void ProcessAndOutputResults(List<Hand> hands){
-            foreach(Hand hand in hands){
-                Console.WriteLine(hand.Name + ": " + String.Join(" ", hand.Cards));
-            }
+            return game;
         }
     }
 }
