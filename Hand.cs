@@ -60,8 +60,8 @@ namespace Poker{
             bool initialized = false;
             for(int i = candidates.Length - 1; i >= 0 && !initialized; i--){
                 if (candidates[i][PRIMARY_QUEUE] != null && candidates[i][PRIMARY_QUEUE].Count() != 0){
-                    PrimaryQueue = candidates[i][PRIMARY_QUEUE].OrderBy(rank => rank).ToList();
-                    SecondaryQueue = candidates[i][SECONDARY_QUEUE].OrderBy(rank => rank).ToList();
+                    PrimaryQueue = candidates[i][PRIMARY_QUEUE].OrderByDescending(rank => rank).ToList();
+                    SecondaryQueue = candidates[i][SECONDARY_QUEUE].OrderByDescending(rank => rank).ToList();
                     HandTypePrecedence = (HandTypePrecedence)i;
                     initialized = true;;
                 }
